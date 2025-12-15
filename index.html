@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>无名次元 | UnknownDimension</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    
+    <!-- React & ReactDOM (UMD) - Keeping 18.2.0 -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Lucide React Icons (UMD) -->
+    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.min.js"></script>
+    
+    <!-- Babel Standalone (for JSX/TS) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              anime: ['"ZCOOL KuaiLe"', 'cursive'],
+              sans: ['"ZCOOL KuaiLe"', 'system-ui', 'sans-serif'],
+            },
+            colors: {
+              'jinx-pink': '#FF0055',
+              'jinx-blue': '#00E5FF',
+              'jinx-dark': '#0F0F0F',
+              'neon-green': '#CCFF00',
+              'paper': '#FFFFFF',
+            },
+            boxShadow: {
+              'sketch': '5px 5px 0px 0px rgba(0,0,0,0.8)',
+              'sketch-hover': '8px 8px 0px 0px rgba(255,0,85,1)',
+              'ink': '0 0 0 3px #000',
+            },
+            animation: {
+              'sketch-shake': 'sketchShake 0.3s infinite',
+              'wiggle': 'wiggle 1s ease-in-out infinite',
+              'float': 'float 4s ease-in-out infinite',
+              'cloth-unfold': 'clothUnfold 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'cloth-fold': 'clothFold 0.4s cubic-bezier(0.7, 0, 0.84, 0) forwards',
+            },
+            keyframes: {
+              sketchShake: {
+                '0%': { transform: 'translate(1px, 1px) rotate(0deg)' },
+                '10%': { transform: 'translate(-1px, -2px) rotate(-1deg)' },
+                '20%': { transform: 'translate(-3px, 0px) rotate(1deg)' },
+                '30%': { transform: 'translate(3px, 2px) rotate(0deg)' },
+                '40%': { transform: 'translate(1px, -1px) rotate(1deg)' },
+                '50%': { transform: 'translate(-1px, 2px) rotate(-1deg)' },
+                '60%': { transform: 'translate(-3px, 1px) rotate(0deg)' },
+                '70%': { transform: 'translate(3px, 1px) rotate(-1deg)' },
+                '80%': { transform: 'translate(-1px, -1px) rotate(1deg)' },
+                '90%': { transform: 'translate(1px, 2px) rotate(0deg)' },
+                '100%': { transform: 'translate(1px, -2px) rotate(-1deg)' },
+              },
+              wiggle: {
+                '0%, 100%': { transform: 'rotate(-2deg)' },
+                '50%': { transform: 'rotate(2deg)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              clothUnfold: {
+                '0%': { opacity: '0', transform: 'scale(0.2) rotate(15deg) skewX(20deg)' },
+                '100%': { opacity: '1', transform: 'scale(1) rotate(0deg) skewX(0)' },
+              },
+              clothFold: {
+                '0%': { opacity: '1', transform: 'scale(1) rotate(0deg) skewX(0)' },
+                '100%': { opacity: '0', transform: 'scale(0.2) rotate(15deg) skewX(20deg)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #FFFFFF;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10 L20 20 M30 10 L10 30 M80 80 L90 70' stroke='%23000' stroke-width='2' stroke-opacity='0.05'/%3E%3C/svg%3E");
+        color: #0F0F0F;
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"><path d="M12 2L2 22h20L12 2z"/></svg>'), auto;
+        overscroll-behavior: none;
+        overflow-x: hidden;
+      }
+      #root {
+        width: 100%;
+        overflow-x: hidden;
+      }
+      .rough-border {
+        border: 3px solid #000;
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      }
+      .rough-border-sm {
+        border: 2px solid #000;
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      }
+      .bg-scribble {
+        background-image: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 5px,
+          rgba(0,0,0,0.05) 5px,
+          rgba(0,0,0,0.05) 10px
+        );
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #FFFFFF;
+        border-left: 2px solid #000;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #FF0055;
+        border: 2px solid #000;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #00E5FF;
+      }
+    </style>
+
+<link rel="stylesheet" href="/index.css">
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react/": "https://esm.sh/react@18.2.0/",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-dom/": "https://esm.sh/react-dom@18.2.0/",
+    "lucide-react": "https://esm.sh/lucide-react@0.263.1"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/assets/index-BJGUH3WA.js"></script>
+</head>
+  <body>
+    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;">
+      <defs>
+        <filter id="sketch-filter">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01 0.02" numOctaves="2" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div id="root"></div>
+  </body>
+</html>
